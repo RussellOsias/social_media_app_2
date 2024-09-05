@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="socialMediaApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers.js"></script>
+</head>
+<body>
+    <div ng-controller="LoginController">
+        <h2>Login</h2>
+        <form ng-submit="login()">
+            <label>Email:</label>
+            <input type="email" ng-model="email" required>
+            <br>
+            <label>Password:</label>
+            <input type="password" ng-model="password" required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+        <a href="/register">Register</a>
+    </div>
+</body>
+</html>

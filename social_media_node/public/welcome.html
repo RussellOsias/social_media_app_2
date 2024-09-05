@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="socialMediaApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers.js"></script>
+    <!-- Include Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #dcdcdc;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2e003e;
+            color: #dcdcdc;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 24px;
+            border-bottom: 3px solid #6a1b9a;
+        }
+
+        footer {
+            background-color: #2e003e;
+            color: #dcdcdc;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+            border-top: 3px solid #6a1b9a;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #222; /* Added background color to the container */
+            border-radius: 8px; /* Rounded corners for the container */
+        }
+
+        h2 {
+            color: #6a1b9a;
+            margin-top: 0; /* Remove top margin to align with container */
+        }
+
+        .profile-picture {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .user-logo {
+            font-size: 80px; /* Adjust size of Font Awesome icon */
+            color: #6a1b9a; /* Color of the icon */
+            margin-bottom: 10px;
+        }
+
+        .profile-info {
+            background-color: #333;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="number"],
+        input[type="file"] {
+            width: calc(100% - 22px); /* Adjusted width to fit within the form */
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            background-color: #222;
+            color: #ddd;
+        }
+
+        button {
+            background-color: #6a1b9a;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%; /* Full width for buttons */
+            margin-top: 10px; /* Added margin on top */
+        }
+
+        button:hover {
+            background-color: #8e24aa;
+        }
+
+        .message {
+            color: #f44336;
+            margin-top: 10px;
+            text-align: center; /* Centered message text */
+        }
+
+        a {
+            color: #6a1b9a;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            margin-top: 20px; /* Added margin on top */
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            border-radius: 50%;
+            border: 3px solid #6a1b9a;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Social Media App
+    </header>
+
+    <div class="container" ng-controller="ProfileController">
+        <h2>Welcome, {{ user.name }}!</h2>
+
+          <!-- Display User Logo -->
+          <div class="profile-picture">
+            <!-- Font Awesome User Icon -->
+            <i class="fas fa-user user-logo"></i>
+        </div>
+        <!-- Display User Information -->
+        <div class="profile-info" ng-if="!showEditForm">
+            <h3>User Information</h3>
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Birthday:</strong> {{ user.birthday }}</p>
+            <p><strong>Age:</strong> {{ user.age }}</p>
+            <p><strong>Gender:</strong> {{ user.gender }}</p>
+            <p><strong>Address:</strong> {{ user.address }}</p>
+            <p><strong>Occupation:</strong> {{ user.occupation }}</p>
+            <p><strong>Nationality:</strong> {{ user.nationality }}</p>
+        </div>
+        
+        <!-- Edit Profile Form -->
+        <form ng-submit="updateProfile()" enctype="multipart/form-data" ng-if="showEditForm">
+            <label>Name:</label>
+            <input type="text" ng-model="user.name" required>
+            <label>Email:</label>
+            <input type="email" ng-model="user.email" required>
+            <label>Birthday:</label>
+            <input type="date" ng-model="user.birthday">
+            <label>Age:</label>
+            <input type="number" ng-model="user.age">
+            <label>Gender:</label>
+            <input type="text" ng-model="user.gender">
+            <label>Address:</label>
+            <input type="text" ng-model="user.address">
+            <label>Occupation:</label>
+            <input type="text" ng-model="user.occupation">
+            <label>Nationality:</label>
+            <input type="text" ng-model="user.nationality">
+            <label>Profile Picture:</label>
+            <input type="file" ng-model="file">
+            <button type="submit">Update Profile</button>
+        </form>
+
+        <!-- Buttons for Logout and Profile Editing -->
+        <div style="margin-top: 20px;">
+            <button ng-click="showEditForm = !showEditForm">{{ showEditForm ? 'Cancel' : 'Edit Profile' }}</button>
+            <button ng-click="logout()">Logout</button>
+        </div>
+
+        <div class="message" ng-if="errorMessage">{{ errorMessage }}</div>
+        <div class="message" ng-if="successMessage">{{ successMessage }}</div>
+    </div>
+</body>
+</html>
+
+    <footer>
+        © 2024 Social Media App. All rights reserved.
+    </footer>
+    
+    <script>
+        var app = angular.module('socialMediaApp', []);
+        
+        app.controller('ProfileController', ['$scope', '$http', '$window', function($scope, $http, $window) {
+            // Fetch user profile data
+            $http.get('/profile').then(function(response) {
+                if (response.data.success) {
+                    $scope.user = response.data.user;
+                } else {
+                    $scope.errorMessage = response.data.message;
+                }
+            }).catch(function(error) {
+                console.error('Profile request error:', error);
+                $scope.errorMessage = 'An error occurred while fetching profile data.';
+            });
+
+            // Update profile function
+            $scope.updateProfile = function() {
+                var formData = new FormData();
+                formData.append('name', $scope.user.name);
+                formData.append('email', $scope.user.email);
+                formData.append('birthday', $scope.user.birthday);
+                formData.append('age', $scope.user.age);
+                formData.append('gender', $scope.user.gender);
+                formData.append('address', $scope.user.address);
+                formData.append('occupation', $scope.user.occupation);
+                formData.append('nationality', $scope.user.nationality);
+                if ($scope.file) {
+                    formData.append('profilePicture', $scope.file);
+                }
+
+                $http.post('/profile/update', formData, {
+                    headers: { 'Content-Type': undefined }
+                }).then(function(response) {
+                    if (response.data.success) {
+                        $scope.user = response.data.user;
+                        $scope.successMessage = 'Profile updated successfully!';
+                    } else {
+                        $scope.errorMessage = response.data.message;
+                    }
+                }).catch(function(error) {
+                    console.error('Update profile request error:', error);
+                    $scope.errorMessage = 'An error occurred while updating profile data.';
+                });
+            };
+
+            // Function to handle logout
+            $scope.logout = function() {
+                $http.post('/auth/logout').then(function(response) {
+                    if (response.data.success) {
+                        $window.location.href = 'index.html'; // Redirect to login page
+                    } else {
+                        $scope.errorMessage = response.data.message;
+                    }
+                }).catch(function(error) {
+                    console.error('Logout request error:', error);
+                    $scope.errorMessage = 'An error occurred during logout.';
+                });
+            };
+        }]);
+    </script>
+</body>
+</html>
